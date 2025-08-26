@@ -5,6 +5,7 @@ import "./globals.css"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { Toaster } from "@/components/ui/toaster"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ html {
         {children}
         <Footer />
         <WhatsAppButton />
+        <Toaster />
       </body>
     </html>
   )

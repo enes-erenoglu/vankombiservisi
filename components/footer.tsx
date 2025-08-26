@@ -50,14 +50,7 @@ export function Footer() {
                     Hakkımızda
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#hizmetler"
-                    className="text-accent-foreground/80 hover:text-accent-foreground transition-colors text-sm md:text-base"
-                  >
-                    Hizmetlerimiz
-                  </a>
-                </li>
+         
                 <li>
                   <a
                     href="/iletisim"

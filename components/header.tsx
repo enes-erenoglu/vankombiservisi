@@ -36,12 +36,7 @@ export function Header() {
             >
               Hakkımızda
             </a>
-            <a
-              href="#hizmetler"
-              className="text-foreground hover:text-primary transition-colors font-medium text-sm xl:text-base"
-            >
-              Hizmetlerimiz
-            </a>
+  
             <a
               href="/iletisim"
               className="text-foreground hover:text-primary transition-colors font-medium text-sm xl:text-base"

@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import { toast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -14,11 +15,31 @@ export function ContactForm() {
     email: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Form submission logic here
-    console.log("Form submitted:", formData)
+    try {
+      setIsSubmitting(true)
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data?.error || "Gönderim başarısız")
+      }
+      toast({ title: "Teşekkürler!", description: "Mesajınız başarıyla iletildi." })
+      setFormData({ name: "", email: "", message: "" })
+    } catch (err: any) {
+      toast({
+        title: "Hata",
+        description: err?.message || "Mesaj gönderilemedi. Lütfen tekrar deneyin.",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -71,8 +92,12 @@ export function ContactForm() {
             />
           </div>
 
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3">
-            Gönder
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3"
+          >
+            {isSubmitting ? "Gönderiliyor..." : "Gönder"}
           </Button>
         </form>
       </CardContent>
